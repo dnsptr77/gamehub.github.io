@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Snake</title>
+<style>
+body{background:#000;color:white;text-align:center;font-family:Arial}
+canvas{background:#111;display:block;margin:auto}
+</style>
+</head>
+<body>
+
+<h2>🐍 Snake Game PRO</h2>
+<canvas id="c" width="400" height="400"></canvas>
+
+<script>
+let c=document.getElementById("c");
+let ctx=c.getContext("2d");
+
+let box=20;
+let snake=[{x:200,y:200}];
+let dir="right";
+
+let food={x:100,y:100};
+
+document.onkeydown=e=>{
+  if(e.key=="ArrowLeft") dir="left";
+  if(e.key=="ArrowRight") dir="right";
+  if(e.key=="ArrowUp") dir="up";
+  if(e.key=="ArrowDown") dir="down";
+};
+
+function game(){
+  ctx.fillStyle="black";
+  ctx.fillRect(0,0,400,400);
+
+  snake.forEach(s=>{
+    ctx.fillStyle="lime";
+    ctx.fillRect(s.x,s.y,box,box);
+  });
+
+  ctx.fillStyle="red";
+  ctx.fillRect(food.x,food.y,box,box);
+
+  let head={...snake[0]};
+
+  if(dir=="left") head.x-=box;
+  if(dir=="right") head.x+=box;
+  if(dir=="up") head.y-=box;
+  if(dir=="down") head.y+=box;
+
+  if(head.x==food.x && head.y==food.y){
+    food={
+      x:Math.floor(Math.random()*20)*box,
+      y:Math.floor(Math.random()*20)*box
+    };
+  } else snake.pop();
+
+  snake.unshift(head);
+}
+
+setInterval(game,120);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameHub PRO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>🎮 GameHub PRO</h1>
+  <input type="text" id="search" placeholder="Cari game..." />
+</header>
+
+<nav>
+  <button onclick="filterGame('all')">All</button>
+  <button onclick="filterGame('arcade')">Arcade</button>
+  <button onclick="filterGame('casual')">Casual</button>
+</nav>
+
+<main id="gameList"></main>
+
+<script src="app.js"></script>
+</body>
+</html>

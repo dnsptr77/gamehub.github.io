@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akun WS+TLS — VMess / VLESS / Trojan</title>
+<meta name="description" content="Ambil & filter akun VMess, VLESS, Trojan khusus WebSocket + TLS dari link subscription.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <div class="logo">🛡️</div>
+    <div>
+      <h1>Akun <span class="accent">WS + TLS</span></h1>
+      <p>VMess · VLESS · Trojan — difilter otomatis, hanya WebSocket + TLS</p>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ===== Input subscription ===== -->
+  <section class="panel">
+    <label class="field-label" for="subUrl">Link Subscription</label>
+    <div class="input-row">
+      <input id="subUrl" type="url" spellcheck="false" autocomplete="off"
+             placeholder="https://contoh.com/subscription?token=...">
+      <button id="fetchBtn" class="btn primary">⚡ Ambil &amp; Filter</button>
+    </div>
+    <div class="meta-row">
+      <button id="togglePaste" class="link-btn" type="button">📋 Tempel isi subscription manual</button>
+      <span class="hint">🔒 Semua diproses di browser Anda</span>
+    </div>
+    <div id="pasteWrap" class="paste-wrap hidden">
+      <textarea id="pasteArea" rows="5" spellcheck="false"
+        placeholder="Tempel isi subscription di sini — bisa base64 atau daftar vmess:// vless:// trojan://"></textarea>
+      <button id="pasteBtn" class="btn" type="button">Proses Teks</button>
+    </div>
+    <div id="status" class="status hidden" role="status"></div>
+  </section>
+
+  <!-- ===== Hasil ===== -->
+  <section id="results" class="hidden">
+
+    <div id="stats" class="stats"></div>
+
+    <div class="toolbar">
+      <input id="search" class="search" type="search" placeholder="🔍 Cari nama / host / SNI...">
+      <div id="protoChips" class="chips"></div>
+      <div class="actions">
+        <button id="refreshBtn" class="btn small" title="Ambil ulang data terbaru">🔄 Refresh</button>
+        <button id="copyAllBtn" class="btn small" title="Salin semua link WS+TLS">📋 Salin Semua</button>
+        <button id="dlTxtBtn" class="btn small" title="Unduh daftar link (.txt)">💾 .txt</button>
+        <button id="dlB64Btn" class="btn small" title="Unduh file subscription base64 (siap diimpor)">📦 Sub Base64</button>
+        <label class="auto-refresh" title="Ambil ulang otomatis tiap 5 menit">
+          <input type="checkbox" id="autoChk"> <span>Auto 5 mnt</span>
+        </label>
+      </div>
+    </div>
+
+    <div id="cards" class="cards"></div>
+    <div id="emptyMsg" class="empty hidden"></div>
+
+    <details id="excludedWrap" class="excluded-wrap hidden">
+      <summary>Dilewati — bukan WS+TLS (<span id="excCount">0</span>)</summary>
+      <div id="excluded" class="excluded-list"></div>
+    </details>
+  </section>
+
+</main>
+
+<!-- ===== Modal QR ===== -->
+<div id="qrModal" class="modal hidden" aria-hidden="true">
+  <div class="modal-box">
+    <button id="qrClose" class="modal-close" type="button" aria-label="Tutup">✕</button>
+    <h3 id="qrName"></h3>
+    <div id="qrBox" class="qr-box"></div>
+    <p class="qr-hint">📷 Scan dengan v2rayNG / NekoBox / v2rayN / Streisand</p>
+    <button id="qrCopy" class="btn primary" type="button">📋 Salin Link</button>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<footer class="site-footer">
+  <p>Dibuat untuk keperluan pribadi · data subscription tidak dikirim ke mana pun selain browser Anda</p>
+</footer>
+
+<script src="qrcode.min.js"></script>
+<script src="parser.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
